@@ -17,11 +17,19 @@ object Statistics {
 
     //    println(correlation(List(9.0, 20.0, 30.0, 40.0, 48.0, 55.0, 61.0, 66.0), List(8.0, 20.0, 31.0, 42.0, 52.0, 61.0, 68.0, -14.0)))
     //
+    println(variance(google))
+    println(variance(amazon))
+    println(variance(microsoft))
+    println(variance(apple))
+
+    System.out.println("---------------------------------------------------")
     println(correlation(gM, microsoft))
     //compoundInterestOverYears(1_000_000, 0.05, 10)
     println(correlation(google, google))
     println(correlation(meta, google))
     println(correlation(amazon, google))
+    println(correlation(meta, meta))
+
     //    println(correlation(apple, google))
     //    println(standardDeviation(amazon))
     //    println(standardDeviation(google))
@@ -63,7 +71,10 @@ object Statistics {
   }
 
   def variance(list: List[Double]): Double = {
-    (list.map(v => (v - average(list)) * (v - average(list))).sum) / (list.size - 1)
+    val av = average(list)
+    list.foldLeft(0.0) { (acc, v) =>
+      acc + (v - av) * (v - av)
+    }   / (list.size - 1)
   }
 
   def average(list: List[Double]): Double = {
